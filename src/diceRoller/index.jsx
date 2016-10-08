@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import Dice from '../dice/index.jsx';
 import styles from './index.scss';
 
 let TIMEOUT_PERIOD = 100;
@@ -51,7 +52,7 @@ class DiceRoller extends Component {
 		let {disabled} = this.props;
 
 		return (
-			<div style={{textAlign: 'center'}}>
+			<div className={styles.diceRoller}>
 				<Dice value={diceValue}/>
 				<button
 						disabled={rolling || disabled ? 'disabled': ''}
@@ -68,109 +69,6 @@ DiceRoller.propTypes = {
 	maxRoll: PropTypes.number.isRequired,
 	disabled: PropTypes.bool,
 	onDiceRoll: PropTypes.func.isRequired
-};
-
-const Dice = ({value}) => {
-	let diceWidth = 80,
-			diceHeight = 80,
-			dotWidth = 8,
-			dotHeight = 8;
-
-	let diceDots = [(
-				<div
-					key="1"
-					style={
-						{left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						top: `${0.2*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="2"
-					style={
-						{right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						top: `${0.2*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="3"
-					style={
-						{left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						top: `${0.5*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="4"
-					style={
-						{left: `${0.5*diceWidth - 0.5*dotWidth}px`,
-						top: `${0.5*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="5"
-					style={
-						{right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						top: `${0.5*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="6"
-					style={
-						{left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						bottom: `${0.2*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			), (
-				<div
-					key="7"
-					style={
-						{right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-						bottom: `${0.2*diceHeight - 0.5*dotHeight}px`}
-					}
-					className={styles.dot}>
-				</div>
-			)];
-
-	switch(value) {
-		case 1:
-			diceDots = diceDots.slice(3,4);
-			break;
-		case 2:
-			diceDots = diceDots.filter((dot, i) => [0, 6].indexOf(i) + 1);
-			break;
-		case 3:
-			diceDots = diceDots.filter((dot, i) => [0, 3, 6].indexOf(i) + 1);
-			break;
-		case 4:
-			diceDots = diceDots.filter((dot, i) => [0, 1, 5, 6].indexOf(i) + 1);
-			break;
-		case 5:
-			diceDots = diceDots.filter((dot, i) => [0, 1, 3, 5, 6].indexOf(i) + 1);
-			break;
-		case 6:
-			diceDots = diceDots.filter((dot, i) => [0, 1, 2, 4, 5, 6].indexOf(i) + 1);
-			break;
-	}
-
-	return (
-		<div className={styles.dice}>
-			{diceDots}
-		</div>
-	);
-}
-
-Dice.propTypes = {
-	value: PropTypes.number.isRequired
 };
 
 function getRandomBetween(min, max, {except}={}) {

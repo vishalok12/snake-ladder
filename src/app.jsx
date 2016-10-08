@@ -1,156 +1,54 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component, PropTypes} from 'react';
-import SnakeLadderBoard from './snakeLadderBoard/index.jsx';
-import DiceRoller from './diceRoller/index.jsx';
-import Player from './player/index.jsx';
+import Game from './game/index.jsx';
+import PlayerDetails from './playerDetails/index.jsx';
 import styles from './index.scss';
 
-const CELL_HEIGHT = 58;
-const CELL_WIDTH = 58;
-const MAX_ROLL = 3;
-const colors = ['red', 'green', 'yellow', 'blue'];
-
-function capitalize(name) {
-	return name.slice(0, 1).toUpperCase() + name.slice(1);
-}
+const gameLevels = {
+	GAME_START: 0,
+	GAME_RUNNING: 1,
+	GAME_FINISHED: 2
+};
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 
-		let initialPositions = {};
-
-		this.props.players.reduce((obj, p) => {
-			obj[p.id] = 0;
-			return obj;
-		}, initialPositions);
-
 		this.state = {
-			positions: initialPositions,
-			gameOver: false,
-			currentPlayerIndex: 0,
-			playerTakingTurn: false,
-			chances: [
-				// {playerId: 1, diceValue: 4}
-			],
-			winners: []
+			playersCount: 2,
+			players: [{name: 'Player 1', id: '1'}, {name: 'Player 2', id: '2'}],
+			gameState: gameLevels.GAME_START
 		};
 
-		this.onDiceRoll = this.onDiceRoll.bind(this);
-		this.onPlayerMove = this.onPlayerMove.bind(this);
+		this.onPlayerSelect = this.onPlayerSelect.bind(this);
+		this.onPlayerNamesSubmit = this.onPlayerNamesSubmit.bind(this);
 	}
 
-	onDiceRoll(value) {
-		let playerId = this.props.players[this.state.currentPlayerIndex].id;
-		let newPosition = this.state.positions[playerId] + value;
-
-		if (newPosition <= 100) {
-			this.movePlayerTo(playerId, newPosition);
-		} else {
-			// Move chance to next player
-			this.nextTurn();
-		}
+	onPlayerSelect(newPlayersCount) {
+		this.setState({playersCount: newPlayersCount});
 	}
 
-	onPlayerMove(playerId, position) {
-		let newPosition;
-
-		let positionKey = position.toString();
-
-		if (this.props.snakes[positionKey]) {
-			newPosition = this.props.snakes[positionKey];
-		} else if (this.props.ladders[positionKey]) {
-			newPosition = this.props.ladders[positionKey];
-		}
-
-		if (newPosition) {
-			this.movePlayerTo(playerId, newPosition);
-		} else {
-			if (this.playerReachedTop(position)) {
-				let newWinners = this.state.winners.concat(playerId);
-
-				// player reached the destination
-				this.setState({
-					winners: newWinners
-				});
-
-				let winnerName = this.props.players[this.state.currentPlayerIndex].name;
-
-				if (newWinners.length + 1 === this.props.players.length) {
-					this.setState({gameOver: true});
-					alert(`${winnerName} Completed, Game Over!`);
-				} else {
-					alert(`${winnerName} Completed!`);
-					// Move chance to next player
-					this.nextTurn();
-				}
-			} else {
-				// Move chance to next player
-				this.nextTurn();
-			}
-		}
-	}
-
-	playerReachedTop(position) {
-		return position === 100;
-	}
-
-	movePlayerTo(playerId, newPosition) {
-		let newPositions = Object.assign(this.state.positions, {
-			[playerId]: newPosition
-		});
-
-		this.setState({positions: newPositions, playerTakingTurn: true});
-	}
-
-	nextTurn() {
-		let nextPlayerIndex = (this.state.currentPlayerIndex + 1) % this.props.players.length;
-
-		while(this.state.winners.indexOf(nextPlayerIndex) !== -1) {
-			nextPlayerIndex = (nextPlayerIndex + 1) % this.props.players.length;
-		}
-		this.setState({
-			currentPlayerIndex: nextPlayerIndex,
-			playerTakingTurn: false
-		});
+	onPlayerNamesSubmit(players) {
+		this.setState({players: players, gameState: gameLevels.GAME_RUNNING});
 	}
 
 	render() {
-		let {ladders, snakes} = this.props;
-		let playerName = this.props.players[this.state.currentPlayerIndex].name;
+		const {ladders, snakes} = this.props;
+
 		return (
-			<div className="container">
-				<h1>Ladders & Snake Board Game</h1>
-				<div>
-					<SnakeLadderBoard ladders={ladders} snakes={snakes}>
-						{this.props.players.map((player, index) => (
-							<Player {...player}
-								key={player.id}
-								color={colors[index]}
-								position={this.state.positions[player.id]}
-								onPlayerMove={this.onPlayerMove}
-								cellWidth={CELL_WIDTH}
-								cellHeight={CELL_HEIGHT}/>
-						))}
-					</SnakeLadderBoard>
-					<div className={styles.rightPanel}>
-						<div className={styles.playerTitle}>{capitalize(playerName)}'s Turn</div>
-						<DiceRoller
-							maxRoll={MAX_ROLL}
-							onDiceRoll={this.onDiceRoll}
-							disabled={this.state.playerTakingTurn || this.state.gameOver} />
-					</div>
-				</div>
+			<div>
+				{this.state.gameState === 0 ?
+					<PlayerDetails
+						playersCount={this.state.playersCount}
+						onPlayerSelect={this.onPlayerSelect}
+						handleSubmit={this.onPlayerNamesSubmit} /> :
+					<Game ladders={ladders} snakes={snakes} players={this.state.players}/>}
 			</div>
 		)
 	}
 }
 
 App.propTypes = {
-	players: PropTypes.arrayOf(PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		id: PropTypes.string.isRequired
-	})),
 	snakes: PropTypes.objectOf(PropTypes.number),
 	ladders: PropTypes.objectOf(PropTypes.number)
 };

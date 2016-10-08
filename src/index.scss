@@ -1,4 +1,20 @@
 .rightPanel {
 	display: inline-block;
 	vertical-align: top;
+	width: 160px;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+.container {
+	padding: 10px 30px;
+}
+
+h1 {
+	margin-bottom: 30px;
+}
+
+.playerTitle {
+	text-align: center;
+	font-size: 20px;
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # react-webpack-babel
 Simple React Webpack Babel Starter Kit
 
@@ -84,3 +85,7 @@ To do the actual linting, run:
 
 ### Contribute
 Please contribute to the project if you think this can be done better in anyway even for this README :)
+=======
+# snake-ladder
+Snake Ladder Game
+>>>>>>> e02d7e21c6e4cf0c3fbcc69fcc2c3317c3ff2e76

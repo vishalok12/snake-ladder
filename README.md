@@ -1,7 +1,10 @@
 # Snake Ladder Game
 Snake Ladder Game in React.JS
 
-### To run
+### To run Directly
+Open the web browser to https://vishalok12.github.io/snake-ladder/
+
+### To run Locally
 
 * You'll need to have [git](https://git-scm.com/) and [node](https://nodejs.org/en/) installed in your system.
 * Fork and clone the project:

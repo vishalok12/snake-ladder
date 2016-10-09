@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component, PropTypes} from 'react';
 import SnakeLadderBoard from '../snakeLadderBoard/index.jsx';
 import DiceRoller from '../diceRoller/index.jsx';

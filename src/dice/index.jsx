@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes} from 'react';
 import styles from './index.scss';
 
 const Dice = ({value, diceWidth, dotWidth}) => {
@@ -12,8 +12,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							top: `${0.2*diceHeight - 0.5*dotHeight}px`
+							left: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							top: `${0.2 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -25,8 +25,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							top: `${0.2*diceHeight - 0.5*dotHeight}px`
+							right: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							top: `${0.2 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -38,8 +38,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							top: `${0.5*diceHeight - 0.5*dotHeight}px`
+							left: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							top: `${0.5 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -51,8 +51,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							left: `${0.5*diceWidth - 0.5*dotWidth}px`,
-							top: `${0.5*diceHeight - 0.5*dotHeight}px`
+							left: `${0.5 * diceWidth - 0.5 * dotWidth}px`,
+							top: `${0.5 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -64,8 +64,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							top: `${0.5*diceHeight - 0.5*dotHeight}px`
+							right: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							top: `${0.5 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -77,8 +77,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							left: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							bottom: `${0.2*diceHeight - 0.5*dotHeight}px`
+							left: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							bottom: `${0.2 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -90,8 +90,8 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 						{
 							width: `${dotWidth}px`,
 							height: `${dotHeight}px`,
-							right: `${0.2*diceWidth - 0.5*dotWidth}px`,
-							bottom: `${0.2*diceHeight - 0.5*dotHeight}px`
+							right: `${0.2 * diceWidth - 0.5 * dotWidth}px`,
+							bottom: `${0.2 * diceHeight - 0.5 * dotHeight}px`
 						}
 					}
 					className={styles.dot}>
@@ -100,7 +100,7 @@ const Dice = ({value, diceWidth, dotWidth}) => {
 
 	switch(value) {
 		case 1:
-			diceDots = diceDots.slice(3,4);
+			diceDots = diceDots.slice(3, 4);
 			break;
 		case 2:
 			diceDots = diceDots.filter((dot, i) => [0, 6].indexOf(i) + 1);

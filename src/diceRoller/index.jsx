@@ -4,6 +4,24 @@ import styles from './index.scss';
 
 let TIMEOUT_PERIOD = 100;
 
+function getRandomBetween(min, max, {except}={}) {
+	if (min > max) {
+		let temp = min;
+		min = max;
+		max = temp;
+	}
+	let value = Math.floor(Math.random() * (max - min + 1) + min);
+	if (!except) {
+	  return value;
+	}
+
+	while (value === except) {
+		value = Math.floor(Math.random() * (max - min + 1) + min);
+	}
+
+	return value;
+}
+
 class DiceRoller extends Component {
 	constructor() {
 		super();
@@ -35,7 +53,7 @@ class DiceRoller extends Component {
 
 		if (this.state.rolling) {
 			setTimeout(() => this.getNewDiceValue(), TIMEOUT_PERIOD);
-		} else if (newDiceValue === 6 && this.state.pastChanceValues.length < this.props.maxRoll-1) {
+		} else if (newDiceValue === 6 && this.state.pastChanceValues.length < this.props.maxRoll - 1) {
 			this.setState({
 				pastChanceValues: this.state.pastChanceValues.concat(newDiceValue),
 				nextChance: true
@@ -55,10 +73,10 @@ class DiceRoller extends Component {
 			<div className={styles.diceRoller}>
 				<Dice value={diceValue}/>
 				<button
-						disabled={rolling || disabled ? 'disabled': ''}
+						disabled={rolling || disabled ? 'disabled' : ''}
 						className={styles.diceRollButton}
 						onClick={this.rollDice}>
-					{rolling ? "Rolling..." : (nextChance ? "Roll Again" : "Roll it")}
+					{rolling ? 'Rolling...' : (nextChance ? 'Roll Again' : 'Roll it')}
 				</button>
 			</div>
 		)
@@ -70,23 +88,5 @@ DiceRoller.propTypes = {
 	disabled: PropTypes.bool,
 	onDiceRoll: PropTypes.func.isRequired
 };
-
-function getRandomBetween(min, max, {except}={}) {
-	if (min > max) {
-		let temp = min;
-		min = max;
-		max = temp;
-	}
-	let value = Math.floor(Math.random()*(max-min+1)+min);
-	if (!except) {
-	  return value;
-	}
-
-	while (value === except) {
-		value = Math.floor(Math.random()*(max-min+1)+min);
-	}
-
-	return value;
-}
 
 export default DiceRoller

@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component, PropTypes} from 'react';
 import Game from './game/index.jsx';
 import PlayerDetails from './playerDetails/index.jsx';
-import styles from './index.scss';
 
 const gameLevels = {
 	GAME_START: 0,

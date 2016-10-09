@@ -3,7 +3,6 @@ import React, {Component, PropTypes} from 'react';
 import SnakeLadderBoard from '../snakeLadderBoard/index.jsx';
 import DiceRoller from '../diceRoller/index.jsx';
 import Player from '../player/index.jsx';
-import Dice from '../dice/index.jsx';
 import PerfectThrows from '../perfectThrows/index.jsx';
 import styles from './index.scss';
 
@@ -56,7 +55,7 @@ export default class Game extends Component {
 	}
 
 	onPlayerMove(playerId, position) {
-		let newPosition;
+		var newPosition;
 
 		let positionKey = position.toString();
 

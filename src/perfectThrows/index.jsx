@@ -27,7 +27,7 @@ class PerfectThrows extends Component {
 	findLaddersBetween(pos1, pos2) {
 		let ladderPositions = [];
 
-		for (var i=pos1; i <=pos2; i++) {
+		for (var i = pos1; i <= pos2; i++) {
 			if (this.props.ladders[i.toString()]) {
 				ladderPositions.push(i);
 			}
@@ -42,8 +42,12 @@ class PerfectThrows extends Component {
 
 	getBestThrows(position) {
 		let {snakes, ladders, maxRoll, getPlayerPosition} = this.props;
+		let nextPositionsFromCurrent,
+			bestThrowsFromNextPositions,
+			minThrow,
+			nextPosition;
 
-		if (position === undefined) {
+		if (typeof position === 'undefined') {
 			position = getPlayerPosition(this.props.currentPlayerIndex);
 		}
 
@@ -63,11 +67,6 @@ class PerfectThrows extends Component {
 
 		let laddersBetweenCurrentToMax = this.findLaddersBetween(position + 1, maxPosition)
 			.filter(ladderPosition => (ladderPosition - position) % 6);
-
-		let nextPositionsFromCurrent,
-			bestThrowsFromNextPositions,
-			minThrow,
-			nextPosition;
 
 		if (laddersBetweenCurrentToMax.length) {
 			// queue.push(maxPosition);
@@ -107,12 +106,20 @@ class PerfectThrows extends Component {
 				<label>Perfect Throws</label>
 				{this.getBestThrows().throws.map((diceThrows, i) => (
 					<div className={styles.stepThrows}>
-						{diceThrows.map((diceThrow,j) => <Dice key={'d-' + i + j} value={diceThrow} diceWidth={40} dotWidth={4}/>)}
+						{diceThrows.map((diceThrow, j) => <Dice key={'d-' + i + j} value={diceThrow} diceWidth={40} dotWidth={4}/>)}
 					</div>
 				))}
 			</div>
 		);
 	}
 }
+
+PerfectThrows.PropTypes = {
+	snakes: PropTypes.objectOf(PropTypes.number).isRequired,
+	ladders: PropTypes.objectOf(PropTypes.number).isRequired,
+	maxRoll: PropTypes.number.isRequired,
+	currentPlayerIndex: PropTypes.number.isRequired,
+	getPlayerPosition: PropTypes.func.isRequired
+};
 
 export default PerfectThrows;

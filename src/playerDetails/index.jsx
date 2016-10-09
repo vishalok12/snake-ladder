@@ -73,4 +73,14 @@ class PlayerDetails extends Component {
 	}
 }
 
+PlayerDetails.defaultProps = {
+	playersCount: 2
+};
+
+PlayerDetails.propTypes = {
+	playersCount: PropTypes.number,
+	handleSubmit: PropTypes.func.isRequired,
+	onPlayerSelect: PropTypes.func.isRequired
+};
+
 export default PlayerDetails;

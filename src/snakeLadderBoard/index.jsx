@@ -38,7 +38,7 @@ BoardCell.propTypes = {
 	ladder: PropTypes.number
 };
 
-const SnakeLadderBoard = ({children, ladders, snakes}) => {
+const SnakeLadderBoard = ({children, ladders, snakes, reverse}) => {
 	let rows = [];
 
 	for (let i=0; i < 10; i++) {
@@ -61,7 +61,7 @@ const SnakeLadderBoard = ({children, ladders, snakes}) => {
 	}
 
 	return (
-		<div className={styles.snakeLadderBoard}>
+		<div className={reverse ? styles.snakeLadderBoardReverse : styles.snakeLadderBoard}>
 			{rows.reverse()}
 			<div className={styles.startPoint}></div>
 			{children}

@@ -21,7 +21,7 @@ export default class Game extends Component {
 		let initialPositions = {};
 
 		this.props.players.reduce((obj, p) => {
-			obj[p.id] = 0;
+			obj[p.id] = this.props.reverse ? 101 : 0;
 			return obj;
 		}, initialPositions);
 
@@ -43,7 +43,7 @@ export default class Game extends Component {
 
 	onDiceRoll(value) {
 		let playerId = this.props.players[this.state.currentPlayerIndex].id;
-		let newPosition = this.state.positions[playerId] + value;
+		let newPosition = this.getNewPosition(playerId, value);
 
 		if (newPosition <= 100) {
 			this.movePlayerTo(playerId, newPosition);
@@ -51,6 +51,14 @@ export default class Game extends Component {
 			// Move chance to next player
 			this.nextTurn();
 		}
+	}
+
+	getNewPosition(playerId, value) {
+		let currentPosition = this.state.positions[playerId];
+		let newPosition = this.props.reverse ? currentPosition - value
+			: this.state.positions[playerId] + value;
+
+		return newPosition;
 	}
 
 	onPlayerMove(playerId, position) {
@@ -67,7 +75,7 @@ export default class Game extends Component {
 		if (newPosition) {
 			this.movePlayerTo(playerId, newPosition);
 		} else {
-			if (this.playerReachedTop(position)) {
+			if (this.playerReachedDestination(position)) {
 				let newWinners = this.state.winners.concat(playerId);
 
 				// player reached the destination
@@ -92,8 +100,8 @@ export default class Game extends Component {
 		}
 	}
 
-	playerReachedTop(position) {
-		return position === 100;
+	playerReachedDestination(position) {
+		return this.props.reverse ? position === 1 : position === 100;
 	}
 
 	movePlayerTo(playerId, newPosition) {
@@ -128,7 +136,7 @@ export default class Game extends Component {
 			<div className="container">
 				<h1>Ladders & Snake Board Game</h1>
 				<div>
-					<SnakeLadderBoard ladders={ladders} snakes={snakes}>
+					<SnakeLadderBoard ladders={ladders} snakes={snakes} reverse={this.props.reverse}>
 						{this.props.players.map((player, index) => (
 							<Player {...player}
 								key={player.id}
@@ -147,6 +155,7 @@ export default class Game extends Component {
 							disabled={this.state.playerTakingTurn || this.state.gameOver} />
 
 						<PerfectThrows
+							reverse={this.props.reverse}
 							currentPlayerIndex={this.state.currentPlayerIndex}
 							getPlayerPosition={this.getPlayerPosition}
 							snakes={this.props.snakes}

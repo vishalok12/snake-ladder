@@ -16,7 +16,8 @@ export default class App extends Component {
 		this.state = {
 			playersCount: 2,
 			players: [{name: 'Player 1', id: '1'}, {name: 'Player 2', id: '2'}],
-			gameState: gameLevels.GAME_START
+			gameState: gameLevels.GAME_START,
+			reverse: false
 		};
 
 		this.onPlayerSelect = this.onPlayerSelect.bind(this);
@@ -27,8 +28,8 @@ export default class App extends Component {
 		this.setState({playersCount: newPlayersCount});
 	}
 
-	onPlayerNamesSubmit(players) {
-		this.setState({players: players, gameState: gameLevels.GAME_RUNNING});
+	onPlayerNamesSubmit(players, reverse) {
+		this.setState({players, reverse, gameState: gameLevels.GAME_RUNNING });
 	}
 
 	render() {
@@ -41,7 +42,12 @@ export default class App extends Component {
 						playersCount={this.state.playersCount}
 						onPlayerSelect={this.onPlayerSelect}
 						handleSubmit={this.onPlayerNamesSubmit} /> :
-					<Game ladders={ladders} snakes={snakes} players={this.state.players}/>}
+					<Game
+						ladders={ladders}
+						snakes={snakes}
+						players={this.state.players}
+						reverse={this.state.reverse}/>
+				}
 			</div>
 		)
 	}

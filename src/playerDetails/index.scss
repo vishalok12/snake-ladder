@@ -1,9 +1,9 @@
 .playersInfoContainer {
-    padding: 20px;
-    width: 500px;
-    border: 1px solid black;
-    margin: 40px auto 0;
-    text-align: center;
+	padding: 20px;
+	width: 500px;
+	border: 1px solid black;
+	margin: 40px auto 0;
+	text-align: center;
 }
 
 .lbl {
@@ -30,15 +30,25 @@
 	background: #59a09d;
 	display: inline-block;
 	color: white;
-    margin: 25px 10px 25px;
-    box-shadow: 0px 0px 2px #000;
-    cursor: pointer;
+	margin: 25px 10px 25px;
+	box-shadow: 0px 0px 2px #000;
+	cursor: pointer;
 }
 
 .playerSelectedBtn {
 	@extend .playerSelectBtn;
 	background: #192b2a;
 	box-shadow: none;
+}
+
+:global(.react-toggle) {
+	vertical-align: middle;
+	margin-right: 10px;
+	margin-bottom: 30px;
+}
+
+.reverseLabel {
+	vertical-align: top;
 }
 
 .submitBtn {

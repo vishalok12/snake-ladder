@@ -1,5 +1,9 @@
+import 'react-toggle/style.css';
+
 import React, {Component, PropTypes} from 'react';
 import styles from './index.scss';
+
+import Toggle from 'react-toggle'
 
 class PlayerDetails extends Component {
 	constructor() {
@@ -9,11 +13,13 @@ class PlayerDetails extends Component {
 			player1: '',
 			player2: '',
 			player3: '',
-			player4: ''
+			player4: '',
+			isReverse: false
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleReverseChange = this.handleReverseChange.bind(this);
 	}
 
 	handleSubmit(e) {
@@ -27,7 +33,11 @@ class PlayerDetails extends Component {
 				name: this.state[`player${i}`]
 			})
 		}
-		this.props.handleSubmit(players);
+		this.props.handleSubmit(players, this.state.isReverse);
+	}
+
+	handleReverseChange() {
+		this.setState({ isReverse: !this.state.isReverse });
 	}
 
 	handleChange(e, index) {
@@ -65,6 +75,12 @@ class PlayerDetails extends Component {
 								className={pCount === playersCount ? styles.playerSelectedBtn : styles.playerSelectBtn}
 								onClick={() => {onPlayerSelect(pCount)}}>{pCount}P</div>
 						))}
+					</div>
+					<div>
+					  <Toggle
+					    defaultChecked={this.state.isReverse}
+					    onChange={this.handleReverseChange} />
+					  <span className={styles.reverseLabel}>Play Reverse</span>
 					</div>
 					<button type="submit" className={styles.submitBtn}>Play</button>
 				</div>
